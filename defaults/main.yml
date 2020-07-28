@@ -1,0 +1,12 @@
+---
+# defaults file for ansible-earlyoom
+dpkg_force_overwrite_configs: false
+earlyoom_enabled: false
+earlyoom_package: earlyoom
+earlyoom_version: latest
+
+earlyoom_config:
+  min_memory: "5%"
+  min_swap: "5%"
+  report_time: 60
+  avoid_regex: "(^|/)(init|systemd|supervisord|ssh|sshd|node_exporter)$"

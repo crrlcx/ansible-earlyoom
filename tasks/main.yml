@@ -1,0 +1,40 @@
+---
+# tasks file for ansible-earlyoom
+- name: earlyoom | copy default env file
+  template:
+    src: "etc/default/{{ item }}.j2"
+    dest: "/etc/default/{{ item }}"
+    mode: 644
+    owner: root
+  when:
+    - earlyoom_enabled | bool
+    - (role_path + '/templates/etc/default/' + item + '.j2') is is_file
+    - ansible_os_family == "Debian"
+  with_items:
+    - 'earlyoom'
+  tags:
+    - always
+  notify:
+    - restart earlyoom
+
+- name: earlyoom | install or upgrade
+  apt:
+    name: "{{ earlyoom_package }}{% if earlyoom_version and earlyoom_version != 'latest' %}={{ earlyoom_version }}*{% endif %}"
+    state: latest
+    install_recommends: yes
+    force: yes
+    force_apt_get: yes
+    dpkg_options: "{{ dpkg_force_overwrite_configs | ternary('force-confdef,force-confnew', 'force-confdef,force-confold') }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+    RUNLEVEL: 1
+  when:
+    - earlyoom_enabled | bool
+    - earlyoom_package is defined
+    - ansible_os_family == "Debian"
+  tags:
+    - always
+  notify:
+    - restart earlyoom

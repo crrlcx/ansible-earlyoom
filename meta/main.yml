@@ -1,0 +1,18 @@
+galaxy_info:
+  author: carrol@protonmail.com
+  description: Download, setup and run earlyoom via apt.
+  license: MIT License
+  min_ansible_version: 2.4
+
+  platforms:
+   - name: Ubuntu
+     versions:
+     - 16.04
+     - 18.04
+     - 20.04
+
+  galaxy_tags:
+    - OOMkiller
+    - earlyoom
+
+dependencies: []

@@ -1,0 +1,9 @@
+---
+# handlers file for ansible-earlyoom
+- name: restart earlyoom
+  service:
+    name: earlyoom
+    state: restarted
+    enabled: yes
+  when:
+    - earlyoom_enabled | bool

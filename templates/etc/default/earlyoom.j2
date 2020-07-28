@@ -1,0 +1,6 @@
+{{ ansible_managed | comment }}
+# Default settings for earlyoom. This file is sourced by /bin/sh from
+# /etc/init.d/earlyoom or by systemd from earlyoom.service.
+
+# Options to pass to earlyoom
+EARLYOOM_ARGS="-m {{ earlyoom_config.min_memory }} -s {{ earlyoom_config.min_swap }} -r {{ earlyoom_config.report_time }} --avoid '{{ earlyoom_config.avoid_regex }}'"
